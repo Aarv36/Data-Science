@@ -1,0 +1,57 @@
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
+%matplotlib inline
+
+import warnings
+warnings.filterwarnings('ignore')
+
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+train = pd.read_csv('/kaggle/input/digit-recognizer/train.csv')
+test = pd.read_csv('/kaggle/input/digit-recognizer/test.csv')
+
+train.head()
+test.head()
+
+train.info()
+test.info()
+
+train.describe()
+test.describe()
+
+train.shape
+test.shape
+
+print(train.shape,test.shape)
+
+#Data preprocessing
+train.isnull().sum()
+test.isnull().sum()
+
+train.head()
+
+train_data =train.loc[:,"pixel0":]
+train_label = train.loc[:"label"]
+
+train_data = train_data/255.0
+test = test/255.0
+
+train_data.head()
+test.head()
+
+digit_array = train.loc[3,"pixel0":]
+arr = np.array(digit_array)
+
+image_array = np.reshape(arr,(28,28))
+
+digit_img = plt.imshow(image_array,cmap = plt.cm.binary)
+plt.colorbar(digit_img)
+print("IMAGE LABEL.{}".format(train.loc[3,"label"]))
+
